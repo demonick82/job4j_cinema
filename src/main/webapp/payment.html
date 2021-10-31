@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <title>Страница оплаты</title>
+</head>
+<script>
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        window.row = urlParams.get('row');
+        window.cell = urlParams.get('cell');
+        window.id = urlParams.get('id')
+        $('h3').text('Вы выбрали ряд ' + window.row + ' место ' + window.cell + ' Сумма : 500 рублей.');
+    });
+
+    function validate() {
+        const name = $('#username').val();
+        const email = $('#email').val();
+        const password = $('#phone').val();
+        let valid = true;
+        $(".error").remove();
+        if (name == '') {
+            $('#username').after('<div class="error" style="color:#ff0000; font-weight: bold">Введите имя</div>')
+            valid = false;
+        }
+        if (email == '') {
+            $('#email').after('<div class="error" style="color:#ff0000; font-weight: bold">Введите почту</div>')
+            valid = false;
+        }
+        if (password == '') {
+            $('#phone').after('<div class="error" style="color:#ff0000; font-weight: bold">Введите пароль</div>')
+            valid = false
+        }
+        return valid;
+    }
+
+    function sendSubmit() {
+        if (validate() == true) {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/cinema/payment',
+                data: 'name=' + $('#username').val()
+                    + '&email=' + $('#email').val()
+                    + '&phone=' + $('#phone').val()
+                    + '&id=' + window.id
+                    + '&row=' + window.row
+                    + '&cell=' + window.cell,
+                dataType: 'text'
+            }).done(function (data) {
+                window.location.href = '/cinema/index.html';
+            }).fail(function (err) {
+                alert(err);
+            });
+        }
+    }
+</script>
+<body>
+<div class="container">
+    <div class="row pt-3">
+        <h3>
+        </h3>
+    </div>
+    <div class="row">
+        <form>
+
+            <div class="form-group">
+                <label for="username">ФИО</label>
+                <input type="text" class="form-control" id="username" placeholder="ФИО">
+            </div>
+            <div class="form-group">
+                <label for="phone">Email</label>
+                <input type="text" class="form-control" id="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефона</label>
+                <input type="text" class="form-control" id="phone" placeholder="Номер телефона">
+            </div>
+            <button type="button" class="btn btn-success" onclick=sendSubmit()>
+                Оплатить
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
