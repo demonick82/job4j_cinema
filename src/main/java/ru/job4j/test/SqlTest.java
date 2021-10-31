@@ -12,10 +12,7 @@ public class SqlTest {
         Store store1 = PsqlStore.instOf();
 
         Ticket ticket = new Ticket(1, 1, 1, 1, 1);
-        //System.out.println(store.selectAccountForEmail("user@mail.ru"));
-        // store.saveTicket(ticket, store.selectAccountForEmail("user@mail.ru"));
-      //  System.out.println(store.findAllTickets());
+        System.out.println(store.selectAccountForEmail("user@mail.ru"));
         System.out.println(store1.findAllTickets());
-
     }
 }
