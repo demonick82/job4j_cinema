@@ -3,7 +3,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta http-equiv="Cache-Control" content="private">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -15,56 +15,13 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <title>Страница оплаты</title>
+    <script src="js/payment.js"></script>
+
 </head>
 <script>
     $(document).ready(function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        window.row = urlParams.get('row');
-        window.cell = urlParams.get('cell');
-        window.id = urlParams.get('id')
-        $('h3').text('Вы выбрали ряд ' + window.row + ' место ' + window.cell + ' Сумма : 500 рублей.');
+        createRequest();
     });
-
-    function validate() {
-        const name = $('#username').val();
-        const email = $('#email').val();
-        const password = $('#phone').val();
-        let valid = true;
-        $(".error").remove();
-        if (name == '') {
-            $('#username').after('<div class="error" style="color:#ff0000; font-weight: bold">Введите имя</div>')
-            valid = false;
-        }
-        if (email == '') {
-            $('#email').after('<div class="error" style="color:#ff0000; font-weight: bold">Введите почту</div>')
-            valid = false;
-        }
-        if (password == '') {
-            $('#phone').after('<div class="error" style="color:#ff0000; font-weight: bold">Введите пароль</div>')
-            valid = false
-        }
-        return valid;
-    }
-
-    function sendSubmit() {
-        if (validate() == true) {
-            $.ajax({
-                type: 'POST',
-                url: 'http://localhost:8080/cinema/payment',
-                data: 'name=' + $('#username').val()
-                    + '&email=' + $('#email').val()
-                    + '&phone=' + $('#phone').val()
-                    + '&id=' + window.id
-                    + '&row=' + window.row
-                    + '&cell=' + window.cell,
-                dataType: 'text'
-            }).done(function (data) {
-                window.location.href = '/cinema/index.html';
-            }).fail(function (err) {
-                alert(err);
-            });
-        }
-    }
 </script>
 <body>
 <div class="container">
@@ -74,7 +31,6 @@
     </div>
     <div class="row">
         <form>
-
             <div class="form-group">
                 <label for="username">ФИО</label>
                 <input type="text" class="form-control" id="username" placeholder="ФИО">
@@ -91,6 +47,8 @@
                 Оплатить
             </button>
         </form>
+    </div>
+    <div class="row" id="errUser">
     </div>
 </div>
 </body>

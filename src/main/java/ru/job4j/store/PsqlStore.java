@@ -1,6 +1,7 @@
 package ru.job4j.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.models.Account;
@@ -8,6 +9,7 @@ import ru.job4j.models.Ticket;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,7 +52,7 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public void saveAccount(Account account) {
+    public void saveAccount(Account account) throws Exception {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("INSERT INTO accounts(username,email,phone) VALUES (?,?,?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
@@ -65,11 +67,10 @@ public class PsqlStore implements Store {
                     account.setId(id.getInt(1));
                 }
             }
-
-
         } catch (
-                SQLIntegrityConstraintViolationException e) {
+                PSQLException e) {
             LOG.error("Пользователь уже существует", e);
+            throw new Exception();
         } catch (
                 Exception e) {
             LOG.error("Ошибка создания пользователя", e);

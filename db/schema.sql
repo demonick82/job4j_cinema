@@ -13,5 +13,5 @@ CREATE TABLE if not exists tickets
     row        INT NOT NULL,
     cell       INT NOT NULL,
     account_id INT NOT NULL REFERENCES accounts (id),
-    UNIQUE (account_id, row, cell)
+    UNIQUE (row, cell)
 );

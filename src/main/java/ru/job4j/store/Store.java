@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface Store {
 
-    void saveAccount(Account account);
+    void saveAccount(Account account) throws Exception;
 
     void deleteAccount(Account account);
 
