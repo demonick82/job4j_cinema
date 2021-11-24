@@ -1,12 +1,9 @@
 package ru.job4j.servlets;
 
-import org.postgresql.util.PSQLException;
 import ru.job4j.models.Account;
 import ru.job4j.models.Ticket;
 import ru.job4j.store.PsqlStore;
 import ru.job4j.store.Store;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +28,7 @@ public class AccountServlet extends HttpServlet {
             int userId = store.selectAccountForEmail(email).getId();
             store.saveTicket(new Ticket(id, row, cell, userId));
         } catch (Exception e) {
-            writer.print(409);
+            writer.print("409 conflict");
         }
     }
 }

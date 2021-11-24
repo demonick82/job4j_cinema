@@ -6,3 +6,5 @@
 ![ScreenShot](images/1.jpg "index.html")
 На второй странице мы вводим данные пользователя
 ![ScreenShot](images/2.jpg "payment.html")
+В случае если покупка ек удалась пользователь получает сообщение об ошибке
+![ScreenShot](images/3.jpg "payment.html")

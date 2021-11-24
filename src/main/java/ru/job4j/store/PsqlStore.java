@@ -144,6 +144,9 @@ public class PsqlStore implements Store {
                 if (id.next()) {
                     ticket.setId(id.getInt(1));
                 }
+            } catch (PSQLException e) {
+                LOG.error("Место уже занято ", e);
+                throw new Exception();
             }
         } catch (Exception e) {
             LOG.error("Ошибка сохранения места", e);

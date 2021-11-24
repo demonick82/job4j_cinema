@@ -38,12 +38,12 @@ function sendSubmit() {
                 + '&cell=' + window.cell,
             dataType: 'text'
         }).done(function (data) {
-           $(".error").remove();
-            if (data != 409) {
+            $(".error").remove();
+            if (data != "409 conflict") {
                 window.location.href = '/cinema/index.html';
             } else {
                 $('form').parent().after('<div class="error" style="color:#ff0000; font-weight: bold">' +
-                    'Пользователь уже существует покупка не удалась </div>')
+                    'Покупка не удалась </div>')
             }
         }).fail(function (err) {
             alert(err);
